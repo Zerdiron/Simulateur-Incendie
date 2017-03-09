@@ -18,11 +18,15 @@ namespace TP9
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow : NavigationWindow
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+		private void Start_ContentRendered(object sender, EventArgs e)
+		{
+			Start.ShowsNavigationUI = false;
 		}
 	}
 }
