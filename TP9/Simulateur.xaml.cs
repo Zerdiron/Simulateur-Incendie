@@ -510,7 +510,7 @@ namespace TP9
 			{
 				EtatSuivant.Content = string.Format("Etape {0}", ++_nombreEtape);
 				EtatSuivant.Background = Brushes.Coral;
-				EtatSuivant.ToolTip = "Passez à l'étape suivante.";
+				EtatSuivant.ToolTip = "Affiche l'étape en cours.";
 				_setFIRE();
 				
 				Time.Start();
