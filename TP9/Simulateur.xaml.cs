@@ -127,7 +127,7 @@ namespace TP9
 		/// <summary>
 		/// Timer de la carte;
 		/// </summary>
-		private DispatcherTimer Time;
+		private DispatcherTimer _time;
 		
 		// Constructeurs.
 		/// <summary>
@@ -150,12 +150,12 @@ namespace TP9
 			ProportionVerte = _proportionVerte;
 			ProportionMarron = _proportionMarron;
 
-			Time = new DispatcherTimer();
-			Time.Interval = TimeSpan.FromSeconds(1);
-			Time.Tick += new EventHandler(Repandre);
+			_time = new DispatcherTimer();
+			_time.Interval = TimeSpan.FromSeconds(1);
+			_time.Tick += new EventHandler(_repandre);
 
 			_creerZone();
-			MakeSave();
+			_makeSave();
 		}
 
 		/// <summary>
@@ -189,9 +189,9 @@ namespace TP9
 			ProportionVerte = _proportionVerte;
 			ProportionMarron = _proportionMarron;
 
-			Time = new DispatcherTimer();
-			Time.Interval = TimeSpan.FromSeconds(1);
-			Time.Tick += new EventHandler(Repandre);
+			_time = new DispatcherTimer();
+			_time.Interval = TimeSpan.FromSeconds(1);
+			_time.Tick += new EventHandler(_repandre);
 
 			_creerZone();
 			for (short i = 0; i < 9; i++)
@@ -339,18 +339,18 @@ namespace TP9
 		/// <summary>
 		/// Remet les boutons à leurs états d'ogirines.
 		/// </summary>
-		private void Reinitialiser_button()
+		private void _reinitialiser_button()
 		{
 			EtatSuivant.Background = _rouge;
 			EtatSuivant.Content = "SET FIRE";
 			_nombreEtape = 0;
-			Time.Stop();
+			_time.Stop();
 		}
 
 		/// <summary>
 		/// Effectue une sauvegarde vierge de la carte en cours.
 		/// </summary>
-		private void MakeSave()
+		private void _makeSave()
 		{
 			for (short i = 0; i < 9; i++)
 				for (short j = 0; j < 6; j++)
@@ -367,7 +367,7 @@ namespace TP9
 		/// <param name="TableauJndiceFire">Le tableau qui contient les coordonées 'j' du feu.</param>
 		/// <param name="i">Les indices 'i' des boucles.</param>
 		/// <param name="j">Les indices 'j' des boucles.</param>
-		private void RepandreFeu(short[] TableauIndiceFire, short[] TableauJndiceFire, short i, short j)
+		private void _repandreFeu(short[] TableauIndiceFire, short[] TableauJndiceFire, short i, short j)
 		{
 			bool toConquer = false;
 			if (_multiplicateur == 1 && _nombreEtape % 8 == 0)
@@ -413,7 +413,13 @@ namespace TP9
 				}
 		}
 
-		private void Repandre(object sender, EventArgs e)
+		// Evènements.
+		/// <summary>
+		/// Enregistre la position du feu puis fait appel à _repandreFeu.
+		/// </summary>
+		/// <param name="sender">Le sender.</param>
+		/// <param name="e">L'event.</param>
+		private void _repandre(object sender, EventArgs e)
 		{
 			if (_nombreEtape > 0) // Pour les étapes suivantes on fait se déplacer le feu.
 			{
@@ -474,13 +480,13 @@ namespace TP9
 					for (short j = 0; j < TableauJndiceFire.Length; j++)
 					{
 
-						RepandreFeu(TableauIndiceFire, TableauJndiceFire, i, j);
+						_repandreFeu(TableauIndiceFire, TableauJndiceFire, i, j);
 
 						if (_multiplicateur == 2 || _multiplicateur == 3)
 						{
 							_decalageVentHorizontal += _ajoutDecalageH; _decalageVentVertical += _ajoutDecalageV;
 
-							RepandreFeu(TableauIndiceFire, TableauJndiceFire, i, j);
+							_repandreFeu(TableauIndiceFire, TableauJndiceFire, i, j);
 
 							_decalageVentHorizontal -= _ajoutDecalageH; _decalageVentVertical -= _ajoutDecalageV;
 						}
@@ -489,7 +495,7 @@ namespace TP9
 						{
 							_decalageVentHorizontal += _ajoutDecalageH * 2; _decalageVentVertical += _ajoutDecalageV * 2;
 
-							RepandreFeu(TableauIndiceFire, TableauJndiceFire, i, j);
+							_repandreFeu(TableauIndiceFire, TableauJndiceFire, i, j);
 
 							_decalageVentHorizontal -= _ajoutDecalageH * 2; _decalageVentVertical -= _ajoutDecalageV * 2;
 						}
@@ -500,11 +506,10 @@ namespace TP9
 			}
 		}
 
-		// Evènements.
 		/// <summary>
 		/// Evènement lors du click sur le bouton SET FIRE.
 		/// </summary>
-		private void EtatSuivant_Click(object sender, RoutedEventArgs e)
+		private void _etatSuivant_Click(object sender, RoutedEventArgs e)
 		{
 			if (_nombreEtape == 0) // Si c'est le départ de feu, on créer le feu et on change le bouton.
 			{
@@ -513,16 +518,16 @@ namespace TP9
 				EtatSuivant.ToolTip = "Affiche l'étape en cours.";
 				_setFIRE();
 				
-				Time.Start();
+				_time.Start();
 			}
 		}
 
 		/// <summary>
 		/// Réinitialise le map en cours en vierge.
 		/// </summary>
-		private void Reinitialiser_Click(object sender, RoutedEventArgs e)
+		private void _reinitialiser_Click(object sender, RoutedEventArgs e)
 		{
-			Reinitialiser_button();
+			_reinitialiser_button();
 			for (short i = 0; i < 9; i++)
 				for (short j = 0; j < 6; j++)
 				{
@@ -539,17 +544,17 @@ namespace TP9
 		/// <summary>
 		/// Génère une nouvelle map.
 		/// </summary>
-		private void NewMap_Click(object sender, RoutedEventArgs e)
+		private void _newMap_Click(object sender, RoutedEventArgs e)
 		{
-			Reinitialiser_button();
+			_reinitialiser_button();
 			_creerZone();
-			MakeSave();
+			_makeSave();
 		}
 
 		/// <summary>
 		/// Modifie le vent.
 		/// </summary>
-		private void NewWind_Click(object sender, RoutedEventArgs e)
+		private void _newWind_Click(object sender, RoutedEventArgs e)
 		{
 			Brush[,] ActualColor = new Brush[9, 6];
 

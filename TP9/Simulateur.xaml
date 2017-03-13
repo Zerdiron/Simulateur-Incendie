@@ -77,7 +77,7 @@
 		<!-- ### Boutons ### -->
 		<!-- Un joli bouton qui met le feu ! -->
 		<Button x:Name="EtatSuivant" Content="SET FIRE" ToolTip="Allumez le feu !"
-				Click="EtatSuivant_Click"
+				Click="_etatSuivant_Click"
 				Background="Red" Foreground="White"
 				Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
 				HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -85,7 +85,7 @@
 
 		<!-- Un joli bouton pour réinitialiser la carte ! -->
 		<Button x:Name="Reinitialiser" Content="Réinitialiser" ToolTip="Remmetre la map actuelle sans feu."
-				Click="Reinitialiser_Click"
+				Click="_reinitialiser_Click"
 				Background="Red" Foreground="White"
 				Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
 				HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -94,7 +94,7 @@
 
 		<!-- Un joli bouton pour créer une nouvelle carte ! -->
 		<Button x:Name="NewMap" Content="New Map" ToolTip="Générer une nouvelle map vierge."
-				Click="NewMap_Click"
+				Click="_newMap_Click"
 				Background="DarkBlue" Foreground="White"
 				Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
 				HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -103,7 +103,7 @@
 		
 		<!-- Un joli bouton pour modifier la config -->
 		<Button x:Name="NewWind" Content="Menu" ToolTip="Permet de changer les configurations."
-				Click="NewWind_Click"
+				Click="_newWind_Click"
 				Background="DarkGreen" Foreground="White"
 				Grid.Row="0" Grid.Column="1" 
 				Grid.ColumnSpan="2"
